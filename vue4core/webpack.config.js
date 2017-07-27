@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='Run - Development' />
+/// <binding BeforeBuild='Run - Development' />
 var path = require("path");
 var webpack = require("webpack");
 var WebpackNotifierPlugin = require("webpack-notifier");
