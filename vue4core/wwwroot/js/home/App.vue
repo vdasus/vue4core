@@ -28,10 +28,17 @@
             <input type="checkbox" id="checkbox" v-model="isDelayed">
             <label for="checkbox">Use delay</label>
         </div>
-        <span>Picked: {{ pickedLang }}</span>
-        <counter></counter>
-        <button type="button" v-on:click="incStore"> Inc </button>
-        <button type="button" v-on:click="decStore"> Dec </button>
+        <div class="row">
+            <span>Picked: {{ pickedLang }}</span>
+            <counter></counter>
+        </div>
+        <div class="row">
+            <button type="button" v-on:click="incStore"> Inc </button>
+            <button type="button" v-on:click="decStore"> Dec </button>
+        </div>
+        <div class="row">
+            <button type="button" v-on:click="getapidata"> Reload </button>
+        </div>
     </div>
 </template>
 <i18n>
@@ -83,14 +90,14 @@
                 set(value) {
                     this.$store.commit('setDelay', value)
                 }
+            },
+            delaySec: function () {
+                return this.isDelayed ? 2 : 0;
             }
         },
         watch: {
             pickedLang: function (val) {
                 this.$i18n.locale = val;
-            },
-            delaySec: function () {
-                this.$store.commit('setDelay', delaySec)
             }
         },
         components: {
