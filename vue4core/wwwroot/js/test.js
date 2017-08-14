@@ -1,5 +1,4 @@
 ﻿import Vue from "vue";
-// ReSharper disable once InconsistentNaming
 import VueI18n from "vue-i18n";
 import Testapp from "./test/Testapp.vue";
 
