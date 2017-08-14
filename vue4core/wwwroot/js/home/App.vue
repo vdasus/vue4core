@@ -39,16 +39,14 @@
     }
 </i18n>
 <script>
-    import { store } from './../common/store';
     import { Counter } from './../components/counter';
     import axios from 'axios';
 
     export default {
-        store,
         name: 'appint',
         data() {
             return {
-                msg: 'Home page message',
+                msg: 'Home page title message',
                 pickedLang: "en",
                 counter: 0,
                 testmessage: "",
