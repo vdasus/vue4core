@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading;
+using Microsoft.AspNetCore.Mvc;
 
 namespace vue4core.Controllers
 {
     public class TestController : Controller
     {
+
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public IActionResult Index()
         {
             ViewBag.Title = "Test/Index";
@@ -11,9 +15,11 @@ namespace vue4core.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTestResponse()
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        public IActionResult GetTestResponse(int delaySec)
         {
-            return Json("Test got from Test Api");
+            if (delaySec != 0) Thread.Sleep(delaySec * 1000);
+            return Json($"Test got from Test Api (Last updated: {DateTime.Now:u})");
         }
     }
 }
