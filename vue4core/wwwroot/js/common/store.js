@@ -10,12 +10,8 @@ export const store = new Vuex.Store({
         isDelayed: false
     },
     mutations: {
-        increment(state) {
-            state.count++;
-        },
-        decrement(state) {
-            state.count--;
-        },
+        increment: state => state.count++,
+        decrement: state => state.count--,
         setDelay(state, isdelay) {
             state.isDelayed = isdelay;
         }

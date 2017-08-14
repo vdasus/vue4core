@@ -1,8 +1,14 @@
 ﻿<template>
     <div id="app">
-        <h1>{{ msg }}</h1>
-        <h1>{{ $t("hello") }}</h1>
-        <span>{{ testmessage }}</span>
+        <div class="row">
+            <h1>{{ msg }}</h1>
+        </div>
+        <div class="row">
+            <h1>{{ $t("hello") }}</h1>
+        </div>
+        <div class="row">
+            <span>{{ testmessage }}</span>
+        </div>
 
         <input v-model="msg" type="search" placeholder="search...">
 
@@ -19,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <input type="checkbox" id="checkbox" v-model="checked">
+            <input type="checkbox" id="checkbox" v-model="isDelayed">
             <label for="checkbox">Use delay</label>
         </div>
         <span>Picked: {{ pickedLang }}</span>
@@ -41,6 +47,7 @@
 <script>
     import { Counter } from './../components/counter';
     import axios from 'axios';
+    import { mapState } from 'vuex'
 
     export default {
         name: 'appint',
@@ -48,9 +55,7 @@
             return {
                 msg: 'Home page title message',
                 pickedLang: "en",
-                counter: 0,
-                testmessage: "",
-                checked: false
+                testmessage: ""
             }
         },
         created: function () {
@@ -68,20 +73,25 @@
                 axios.get("/Home/GetTestResponse/" + this.delaySec)
                     .then(response => { this.testmessage = response.data })
                     .catch(e => { this.errors.push(e); });
-            },
-            setdelay: function () {
-                this.$store.commit('setDelay', this.checked)
             }
         },
         computed: {
-            delaySec: function () {
-                checked ? 2000 : 0;
+            isDelayed: {
+                get() {
+                    return this.$store.state.isDelayed
+                },
+                set(value) {
+                    this.$store.commit('setDelay', value)
+                }
             }
         },
         watch: {
             pickedLang: function (val) {
                 this.$i18n.locale = val;
             },
+            delaySec: function () {
+                this.$store.commit('setDelay', delaySec)
+            }
         },
         components: {
             Counter
