@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />
-    <Folder Include="wwwroot\js\NewFolder\" />
   </ItemGroup>
 
 </Project>

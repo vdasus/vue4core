@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 
 namespace vue4core.Controllers
@@ -34,10 +35,10 @@ namespace vue4core.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTestResponse()
+        public IActionResult GetTestResponse(int delaySec = 0)
         {
-            //Thread.Sleep(2000);
-            return Json("Test got from Api");
+            if(delaySec !=0) Thread.Sleep(delaySec * 1000);
+            return Json($"Test got from Api (Last updated: {DateTime.Now:u})");
         }
     }
 }

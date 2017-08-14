@@ -2,7 +2,7 @@
     <div id="app">
         <h1>{{ msg }}</h1>
         <h1>{{ $t("hello") }}</h1>
-        <h1>{{ testmessage }}</h1>
+        <span>{{ testmessage }}</span>
 
         <input v-model="msg" type="search" placeholder="search...">
 
@@ -17,6 +17,10 @@
                 <label for="two">Ru</label>
                 <br>
             </div>
+        </div>
+        <div class="row">
+            <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">Use delay</label>
         </div>
         <span>Picked: {{ pickedLang }}</span>
         <counter></counter>
@@ -44,10 +48,11 @@
         name: 'appint',
         data() {
             return {
-                msg: 'Welcome to Your Vue.js App',
+                msg: 'Home page message',
                 pickedLang: "en",
                 counter: 0,
-                testmessage: ""
+                testmessage: "",
+                checked: false
             }
         },
         created: function () {
@@ -62,15 +67,23 @@
                 this.$store.commit('decrement');
             },
             getapidata: function () {
-                axios.get("/Home/GetTestResponse/")
+                axios.get("/Home/GetTestResponse/" + this.delaySec)
                     .then(response => { this.testmessage = response.data })
                     .catch(e => { this.errors.push(e); });
+            },
+            setdelay: function () {
+                this.$store.commit('setDelay', this.checked)
+            }
+        },
+        computed: {
+            delaySec: function () {
+                checked ? 2000 : 0;
             }
         },
         watch: {
             pickedLang: function (val) {
                 this.$i18n.locale = val;
-            }
+            },
         },
         components: {
             Counter

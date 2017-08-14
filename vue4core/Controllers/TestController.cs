@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 
 namespace vue4core.Controllers
@@ -15,10 +16,10 @@ namespace vue4core.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
-        public IActionResult GetTestResponse()
+        public IActionResult GetTestResponse(int delaySec)
         {
-            //Thread.Sleep(2000);
-            return Json("Test got from Test Api (MBcached)");
+            if (delaySec != 0) Thread.Sleep(delaySec * 1000);
+            return Json($"Test got from Test Api (Last updated: {DateTime.Now:u})");
         }
     }
 }
