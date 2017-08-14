@@ -35,7 +35,6 @@
     }
 </i18n>
 <script>
-    import VueI18n from "vue-i18n";
     import { store } from './../common/store';
     import { Counter } from './../components/counter';
     import axios from 'axios';
