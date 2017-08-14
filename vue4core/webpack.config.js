@@ -1,15 +1,18 @@
-﻿/// <binding BeforeBuild='Run - Development' />
+/// <binding BeforeBuild='Run - Development' />
 var path = require("path");
 var webpack = require("webpack");
 var WebpackNotifierPlugin = require("webpack-notifier");
 var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-    entry: "./wwwroot/js/main.js",
+    entry: {
+        main: "./wwwroot/js/main.js",
+        test: "./wwwroot/js/test.js"
+    },
     output: {
         path: path.resolve(__dirname, "./wwwroot/js/dist"),
         publicPath: "/wwwroot/js/dist/",
-        filename: "build.js"
+        filename: "[name].js"
     },
     module: {
         rules: [

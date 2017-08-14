@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,18 @@ namespace vue4core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            services.Configure<GzipCompressionProviderOptions>(options =>
+                options.Level = System.IO.Compression.CompressionLevel.Optimal);
+
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+
+            services.AddResponseCompression();
+            services.AddResponseCaching();
+
             services.AddMvc();
         }
 
@@ -44,6 +56,9 @@ namespace vue4core
             }
 
             app.UseStaticFiles();
+
+            app.UseResponseCompression();
+            app.UseResponseCaching();
 
             app.UseMvc(routes =>
             {

@@ -1,14 +1,8 @@
 ﻿<template>
-    <div id="app">
-        <div class="row">
-            <h1>{{ msg }}</h1>
-        </div>
-        <div class="row">
-            <h1>{{ $t("hello") }}</h1>
-        </div>
-        <div class="row">
-            <span>{{ testmessage }}</span>
-        </div>
+    <div id="testapp">
+        <h1>{{ msg }}</h1>
+        <h1>{{ $t("hello") }}</h1>
+        <h1>{{ testmessage }}</h1>
 
         <input v-model="msg" type="search" placeholder="search...">
 
@@ -24,44 +18,33 @@
                 <br>
             </div>
         </div>
-        <div class="row">
-            <input type="checkbox" id="checkbox" v-model="isDelayed">
-            <label for="checkbox">Use delay</label>
-        </div>
-        <div class="row">
-            <span>Picked: {{ pickedLang }}</span>
-            <counter></counter>
-        </div>
-        <div class="row">
-            <button type="button" v-on:click="incStore"> Inc </button>
-            <button type="button" v-on:click="decStore"> Dec </button>
-        </div>
-        <div class="row">
-            <button type="button" v-on:click="getapidata"> Reload </button>
-        </div>
+        <span>Picked: {{ pickedLang }}</span>
+        <counter></counter>
+        <button type="button" v-on:click="incStore"> Inc </button>
+        <button type="button" v-on:click="decStore"> Dec </button>
     </div>
 </template>
 <i18n>
     {
     "en": {
-    "hello": "hello world!"
+    "hello": "hello test world!"
     },
     "ru": {
-    "hello": "привет мир！"
+    "hello": "привет тест мир！"
     }
     }
 </i18n>
 <script>
     import { Counter } from './../components/counter';
     import axios from 'axios';
-    import { mapState } from 'vuex'
 
     export default {
-        name: 'appint',
+        name: 'testapp',
         data() {
             return {
-                msg: 'Home page title message',
+                msg: 'Welcome to Your Test Vue.js App',
                 pickedLang: "en",
+                counter: 0,
                 testmessage: ""
             }
         },
@@ -77,22 +60,9 @@
                 this.$store.commit('decrement');
             },
             getapidata: function () {
-                axios.get("/Home/GetTestResponse/" + this.delaySec)
+                axios.get("/Test/GetTestResponse/")
                     .then(response => { this.testmessage = response.data })
                     .catch(e => { this.errors.push(e); });
-            }
-        },
-        computed: {
-            isDelayed: {
-                get() {
-                    return this.$store.state.isDelayed
-                },
-                set(value) {
-                    this.$store.commit('setDelay', value)
-                }
-            },
-            delaySec: function () {
-                return this.isDelayed ? 2 : 0;
             }
         },
         watch: {
