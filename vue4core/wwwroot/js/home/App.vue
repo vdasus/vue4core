@@ -1,6 +1,7 @@
 ﻿<template>
     <div id="app">
         <div class="row">
+            <h1>{{ currentMsg }}</h1>
             <h1>{{ msg }}</h1>
         </div>
         <div class="row">
@@ -15,11 +16,11 @@
         <br />
         <div class="row">
             <div class="col-md-1">
-                <input type="radio" id="en" value="en" v-model="pickedLang">
+                <input type="radio" id="en-US" value="en-US" v-model="pickedLang">
                 <label for="one">En</label>
             </div>
             <div class="col-md-1">
-                <input type="radio" id="ru" value="ru" v-model="pickedLang">
+                <input type="radio" id="ru-RU" value="ru-RU" v-model="pickedLang">
                 <label for="two">Ru</label>
                 <br>
             </div>
@@ -39,6 +40,7 @@
 
             <input type="checkbox" id="checkbox" v-model="isCached">
             <label for="checkbox">{{ $t("iscache") }}</label>
+            <br /><label>Locale: {{ this.$i18n.locale }}</label>
         </div>
 
         <div class="row">
@@ -48,7 +50,7 @@
 </template>
 <i18n>
     {
-     "en": {
+     "en-US": {
       "htitle": "Home page title message",
       "hello": "hello world!",
       "iscache": "Cached",
@@ -59,7 +61,7 @@
       "picked": "picked ",
       "search": "search ..."
      },
-    "ru": {
+    "ru-RU": {
       "htitle": "Привет с домашней страницы",
       "hello": "привет мир！",
       "iscache": "Кешировать",
@@ -81,14 +83,13 @@
         name: 'appint',
         data() {
             return {
-                msg: "test",
-                pickedLang: "en",
+                msg: "",
+                pickedLang: "en-US",
                 testmessage: ""
             }
         },
         created: function () {
-            this.msg = this.$i18n.htitle;
-            this.$i18n.locale = "en";
+            this.$i18n.locale = "en-US";
             this.getapidata();
         },
         methods: {
@@ -120,6 +121,9 @@
                 set(value) {
                     this.$store.commit('setCached', value)
                 }
+            },
+            currentMsg: function () {
+                return this.$t('htitle', this.$i18n.locale);
             },
             delaySec: function () {
                 return this.isDelayed ? 2 : 0;
