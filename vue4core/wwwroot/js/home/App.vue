@@ -25,10 +25,6 @@
             </div>
         </div>
         <div class="row">
-            <input type="checkbox" id="checkbox" v-model="isDelayed">
-            <label for="checkbox">Use delay</label>
-        </div>
-        <div class="row">
             <span>Picked: {{ pickedLang }}</span>
             <counter></counter>
         </div>
@@ -36,6 +32,15 @@
             <button type="button" v-on:click="incStore"> Inc </button>
             <button type="button" v-on:click="decStore"> Dec </button>
         </div>
+
+        <div class="row">
+            <input type="checkbox" id="checkbox" v-model="isDelayed">
+            <label for="checkbox">Use delay</label>
+
+            <input type="checkbox" id="checkbox" v-model="isCached">
+            <label for="checkbox">Use cache</label>
+        </div>
+
         <div class="row">
             <button type="button" v-on:click="getapidata"> Reload </button>
         </div>
@@ -77,7 +82,7 @@
                 this.$store.commit('decrement');
             },
             getapidata: function () {
-                axios.get("/Home/GetTestResponse/" + this.delaySec)
+                axios.get("/Home/GetTestResponse" + this.cachePostfix + this.delaySec)
                     .then(response => { this.testmessage = response.data })
                     .catch(e => { this.errors.push(e); });
             }
@@ -91,8 +96,19 @@
                     this.$store.commit('setDelay', value)
                 }
             },
+            isCached: {
+                get() {
+                    return this.$store.state.isCached
+                },
+                set(value) {
+                    this.$store.commit('setCached', value)
+                }
+            },
             delaySec: function () {
                 return this.isDelayed ? 2 : 0;
+            },
+            cachePostfix: function () {
+                return this.isCached ? "Cached/" : "/";
             }
         },
         watch: {
