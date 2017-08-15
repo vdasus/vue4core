@@ -10,7 +10,7 @@
             <span>{{ testmessage }}</span>
         </div>
 
-        <input v-model="msg" type="search" placeholder="search...">
+       <input v-model="msg" type="search" v-bind:placeholder="$t('search')" >
 
         <br />
         <div class="row">
@@ -25,35 +25,51 @@
             </div>
         </div>
         <div class="row">
-            <span>Picked: {{ pickedLang }}</span>
+            <span>{{ $t("picked") }}: {{ pickedLang }}</span>
             <counter></counter>
         </div>
         <div class="row">
-            <button type="button" v-on:click="incStore"> Inc </button>
-            <button type="button" v-on:click="decStore"> Dec </button>
+            <button type="button" v-on:click="incStore"> {{ $t("inc") }} </button>
+            <button type="button" v-on:click="decStore"> {{ $t("dec") }} </button>
         </div>
 
         <div class="row">
             <input type="checkbox" id="checkbox" v-model="isDelayed">
-            <label for="checkbox">Use delay</label>
+            <label for="checkbox">{{ $t("isdelay") }}</label>
 
             <input type="checkbox" id="checkbox" v-model="isCached">
-            <label for="checkbox">Use cache</label>
+            <label for="checkbox">{{ $t("iscache") }}</label>
         </div>
 
         <div class="row">
-            <button type="button" v-on:click="getapidata"> Reload </button>
+            <button type="button" v-on:click="getapidata"> {{ $t("reload") }} </button>
         </div>
     </div>
 </template>
 <i18n>
     {
-    "en": {
-    "hello": "hello world!"
-    },
+     "en": {
+      "htitle": "Home page title message",
+      "hello": "hello world!",
+      "iscache": "Cached",
+      "isdelay": "Delayed",
+      "inc": "Inc",
+      "dec": "Dec",
+      "reload": "Reload",
+      "picked": "picked ",
+      "search": "search ..."
+     },
     "ru": {
-    "hello": "привет мир！"
-    }
+      "htitle": "Привет с домашней страницы",
+      "hello": "привет мир！",
+      "iscache": "Кешировать",
+      "isdelay": "Задержка",
+      "inc": "Плюс",
+      "dec": "Минус",
+      "reload": "Обновить",
+      "picked": "выбрано ",
+      "search": "искать ..."
+     }
     }
 </i18n>
 <script>
@@ -65,12 +81,13 @@
         name: 'appint',
         data() {
             return {
-                msg: 'Home page title message',
+                msg: "test",
                 pickedLang: "en",
                 testmessage: ""
             }
         },
         created: function () {
+            this.msg = this.$i18n.htitle;
             this.$i18n.locale = "en";
             this.getapidata();
         },
