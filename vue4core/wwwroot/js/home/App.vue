@@ -48,32 +48,7 @@
         </div>
     </div>
 </template>
-<i18n>
-    {
-     "en-US": {
-      "htitle": "Home page title message",
-      "hello": "hello world!",
-      "iscache": "Cached",
-      "isdelay": "Delayed",
-      "inc": "Inc",
-      "dec": "Dec",
-      "reload": "Reload",
-      "picked": "picked ",
-      "search": "search ..."
-     },
-    "ru-RU": {
-      "htitle": "Привет с домашней страницы",
-      "hello": "привет мир！",
-      "iscache": "Кешировать",
-      "isdelay": "Задержка",
-      "inc": "Плюс",
-      "dec": "Минус",
-      "reload": "Обновить",
-      "picked": "выбрано ",
-      "search": "искать ..."
-     }
-    }
-</i18n>
+<i18n src="../lang/home/App.json" />
 <script>
     import { Counter } from './../components/counter';
     import axios from 'axios';
