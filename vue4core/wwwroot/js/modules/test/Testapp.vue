@@ -32,10 +32,10 @@
         </div>
     </div>
 </template>
-<i18n src="../lang/test/testapp.json" />
+<i18n src="./testapp.lang.json" />
 <script>
-    import { Counter } from './../components/counter';
-    import Langchooser from "./../components/langchooser.vue";
+    import { Counter } from './../../components/counter';
+    import Langchooser from "./../../components/langchooser.vue";
     import axios from 'axios';
     //import { mapState } from 'vuex'
 

@@ -9,11 +9,11 @@
         </div>
     </div>
 </template>
-<i18n src="../lang/home/App.json" />
+<i18n src="./App.lang.json" />
 <script>
     import axios from 'axios';
     //import { mapState } from 'vuex'
-    import Langchooser from "./../components/langchooser.vue";
+    import Langchooser from "./../../components/langchooser.vue";
 
     export default {
         name: 'appint',
