@@ -1,62 +1,70 @@
 ﻿<template>
     <div id="app">
-        <h1>{{ msg }}</h1>
-        <h1>{{ $t("hello") }}</h1>
-        <span>{{ testmessage }}</span>
+        <div class="row">
+            <h1>{{ currentMsg }}</h1>
+            <h1>{{ msg }}</h1>
+        </div>
+        <div class="row">
+            <h1>{{ $t("hello") }}</h1>
+        </div>
+        <div class="row">
+            <span>{{ testmessage }}</span>
+        </div>
 
-        <input v-model="msg" type="search" placeholder="search...">
+       <input v-model="msg" type="search" v-bind:placeholder="$t('search')" >
 
         <br />
         <div class="row">
             <div class="col-md-1">
-                <input type="radio" id="en" value="en" v-model="pickedLang">
+                <input type="radio" id="en-US" value="en-US" v-model="pickedLang">
                 <label for="one">En</label>
             </div>
             <div class="col-md-1">
-                <input type="radio" id="ru" value="ru" v-model="pickedLang">
+                <input type="radio" id="ru-RU" value="ru-RU" v-model="pickedLang">
                 <label for="two">Ru</label>
                 <br>
             </div>
         </div>
         <div class="row">
-            <input type="checkbox" id="checkbox" v-model="checked">
-            <label for="checkbox">Use delay</label>
+            <span>{{ $t("picked") }}: {{ pickedLang }}</span>
+            <counter></counter>
         </div>
-        <span>Picked: {{ pickedLang }}</span>
-        <counter></counter>
-        <button type="button" v-on:click="incStore"> Inc </button>
-        <button type="button" v-on:click="decStore"> Dec </button>
+        <div class="row">
+            <button type="button" v-on:click="incStore"> {{ $t("inc") }} </button>
+            <button type="button" v-on:click="decStore"> {{ $t("dec") }} </button>
+        </div>
+
+        <div class="row">
+            <input type="checkbox" id="checkbox" v-model="isDelayed">
+            <label for="checkbox">{{ $t("isdelay") }}</label>
+
+            <input type="checkbox" id="checkbox" v-model="isCached">
+            <label for="checkbox">{{ $t("iscache") }}</label>
+            <br /><label>Locale: {{ this.$i18n.locale }}</label>
+        </div>
+
+        <div class="row">
+            <button type="button" v-on:click="getapidata"> {{ $t("reload") }} </button>
+        </div>
     </div>
 </template>
-<i18n>
-    {
-    "en": {
-    "hello": "hello world!"
-    },
-    "ru": {
-    "hello": "привет мир！"
-    }
-    }
-</i18n>
+<i18n src="../lang/home/App.json" />
 <script>
-    import { store } from './../common/store';
     import { Counter } from './../components/counter';
     import axios from 'axios';
+    import { mapState } from 'vuex'
 
     export default {
-        store,
         name: 'appint',
         data() {
             return {
-                msg: 'Home page message',
-                pickedLang: "en",
-                counter: 0,
-                testmessage: "",
-                checked: false
+                msg: "",
+                pickedLang: "en-US",
+                testmessage: ""
             }
         },
         created: function () {
-            this.$i18n.locale = "en";
+            this.$i18n.locale = "en-US";
             this.getapidata();
         },
         methods: {
@@ -67,23 +75,42 @@
                 this.$store.commit('decrement');
             },
             getapidata: function () {
-                axios.get("/Home/GetTestResponse/" + this.delaySec)
+                axios.get("/Home/GetTestResponse" + this.cachePostfix + this.delaySec)
                     .then(response => { this.testmessage = response.data })
                     .catch(e => { this.errors.push(e); });
-            },
-            setdelay: function () {
-                this.$store.commit('setDelay', this.checked)
             }
         },
         computed: {
+            isDelayed: {
+                get() {
+                    return this.$store.state.isDelayed
+                },
+                set(value) {
+                    this.$store.commit('setDelay', value)
+                }
+            },
+            isCached: {
+                get() {
+                    return this.$store.state.isCached
+                },
+                set(value) {
+                    this.$store.commit('setCached', value)
+                }
+            },
+            currentMsg: function () {
+                return this.$t('htitle', this.$i18n.locale);
+            },
             delaySec: function () {
-                checked ? 2000 : 0;
+                return this.isDelayed ? 2 : 0;
+            },
+            cachePostfix: function () {
+                return this.isCached ? "Cached/" : "/";
             }
         },
         watch: {
             pickedLang: function (val) {
                 this.$i18n.locale = val;
-            },
+            }
         },
         components: {
             Counter

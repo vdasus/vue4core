@@ -1,0 +1,1 @@
+git push --all --prune X:\Repo\_Learn\vue4core.git 

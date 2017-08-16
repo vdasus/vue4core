@@ -34,11 +34,19 @@ namespace vue4core.Controllers
             return View();
         }
 
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
-        public IActionResult GetTestResponse(int delaySec = 0)
+        public IActionResult GetTestResponseCached(string id = "0")
         {
-            if(delaySec !=0) Thread.Sleep(delaySec * 1000);
-            return Json($"Test got from Api (Last updated: {DateTime.Now:u})");
+            return GetTestResponse(id);
+        }
+
+        [HttpGet]
+        public IActionResult GetTestResponse(string id = "0")
+        {
+            var tmpSec = int.Parse(id);
+            if (tmpSec != 0) Thread.Sleep(tmpSec * 1000);
+            return Json($"Test got from Api {id} (Last updated: {DateTime.Now:u})");
         }
     }
 }
