@@ -2,6 +2,10 @@
 
 import Vue from "vue";
 import Vuex from "vuex";
+import actions from "./actions";
+import mutations from "./mutations";
+import getters from "./getters";
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -10,14 +14,7 @@ export const store = new Vuex.Store({
         isDelayed: false,
         isCached: true
     },
-    mutations: {
-        increment: state => state.count++,
-        decrement: state => state.count--,
-        setDelay(state, isdelay) {
-            state.isDelayed = isdelay;
-        },
-        setCached(state, isCached) {
-            state.isCached = isCached;
-        }
-    }
+    mutations,
+    actions,
+    getters
 });
