@@ -3,13 +3,16 @@
         <div class="row">
             <h1>{{ msg }}</h1>
             <Langchooser></Langchooser>
+            <div>
+                <a href="http://localhost:63686/Test">Main playground here</a>
+            </div>
         </div>
     </div>
 </template>
 <i18n src="../lang/home/App.json" />
 <script>
     import axios from 'axios';
-    import { mapState } from 'vuex'
+    //import { mapState } from 'vuex'
     import Langchooser from "./../components/langchooser.vue";
 
     export default {
