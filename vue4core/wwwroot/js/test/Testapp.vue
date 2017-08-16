@@ -14,7 +14,6 @@
         <br />
         <Langchooser></Langchooser>
         <div class="row">
-            <span>{{ $t("picked") }}: {{ pickedLang }}</span>
             <counter></counter>
         </div>
         <div class="row">
@@ -45,7 +44,6 @@
         data() {
             return {
                 msg: "",
-                pickedLang: "en-US",
                 testmessage: ""
             }
         },
@@ -91,11 +89,6 @@
             },
             cachePostfix: function () {
                 return this.isCached ? "Cached/" : "/";
-            }
-        },
-        watch: {
-            pickedLang: function (val) {
-                this.$i18n.locale = val;
             }
         },
         components: {
