@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace vue4core.Controllers
 {
@@ -32,21 +30,6 @@ namespace vue4core.Controllers
         public IActionResult Error()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
-        [HttpGet]
-        public IActionResult GetTestResponseCached(string id = "0")
-        {
-            return GetTestResponse(id);
-        }
-
-        [HttpGet]
-        public IActionResult GetTestResponse(string id = "0")
-        {
-            var tmpSec = int.Parse(id);
-            if (tmpSec != 0) Thread.Sleep(tmpSec * 1000);
-            return Json($"Test got from Api {id} (Last updated: {DateTime.Now:u})");
         }
     }
 }
