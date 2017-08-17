@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace vue4core.Controllers
 {
     public class HomeController : Controller
     {
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        private readonly IStringLocalizer<HomeController> _localizer;
+
+        public HomeController(IStringLocalizer<HomeController> localizer)
+        {
+            _localizer = localizer;
+        }
+
         public IActionResult Index()
         {
+            ViewBag.Title = _localizer["Title"];
             return View();
         }
 
@@ -30,6 +41,18 @@ namespace vue4core.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        [HttpPost, HttpGet]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }
