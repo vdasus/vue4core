@@ -1,7 +1,7 @@
 ﻿<template>
     <div id="app">
         <div class="row">
-            <h1>{{ msg }}</h1>
+            <h1>{{ $t("htitle") }}</h1>
             <Langchooser></Langchooser>
             <div>
                 <a href="http://localhost:63686/Test">Main playground here</a>
@@ -11,8 +11,8 @@
 </template>
 <i18n src="./App.lang.json" />
 <script>
-    import axios from 'axios';
     //import { mapState } from 'vuex'
+    import axios from 'axios';
     import Langchooser from "./../../components/langchooser.vue";
 
     export default {
@@ -20,6 +20,19 @@
         data() {
             return {
                 msg: "Hello from App.vue",
+            }
+        },
+        created: function () {
+            this.$i18n.locale = this.lang;
+        },        
+        computed: {
+            lang: function () {
+                return this.$store.state.lang;
+            }
+        },
+        watch: {
+            lang: function (){
+                this.$i18n.locale = this.lang;
             }
         },
         components: {

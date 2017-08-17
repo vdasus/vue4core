@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+<ul class="nav nav-pills navbar-nav navbar-right">
+    @*<ul class="nav navbar-nav navbar-right">*@
+    @foreach (var zz in cultureItems)
+    {
+        <li>
+            <span class="badge">
+                @Html.ActionLink(zz.Value, "SetLanguage", "Home", new { culture = zz.Value, returnUrl = Context.Request.Path }, new { @class = "badge" })
+            </span>
+        </li>
+    }
+</ul>
