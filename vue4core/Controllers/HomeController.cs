@@ -58,7 +58,6 @@ namespace vue4core.Controllers
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
-
             return Ok();
         }
     }

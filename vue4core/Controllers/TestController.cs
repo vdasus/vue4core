@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace vue4core.Controllers
 {
     public class TestController : Controller
     {
+        private readonly IStringLocalizer<HomeController> _localizer;
+
+        public TestController(IStringLocalizer<HomeController> localizer)
+        {
+            _localizer = localizer;
+        }
 
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public IActionResult Index()
@@ -25,7 +32,7 @@ namespace vue4core.Controllers
         {
             var tmpSec = int.Parse(id);
             if (tmpSec != 0) Thread.Sleep(tmpSec * 1000);
-            return Json($"Test got from Api {id} (Last updated: {DateTime.Now:u})");
+            return Json(string.Format(_localizer["Test got from Api {0} (Last updated: {1:u})"], id, DateTime.Now));
         }
     }
 }

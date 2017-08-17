@@ -1,4 +1,4 @@
-﻿import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED, SET_LANG } from "./mutation-types";
+﻿import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED, SET_LANG } from "./const-types";
 
 export default {
     [CNT_INCREMENT]: state => state.count++,

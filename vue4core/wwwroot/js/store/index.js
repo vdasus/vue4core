@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
         count: 0,
         isDelayed: false,
         isCached: true,
-        lang: "en"
+        lang: "ru"
     },
     created: function(){
         this.$i18n.locale = lang;

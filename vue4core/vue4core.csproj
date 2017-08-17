@@ -27,6 +27,9 @@
     <Folder Include="wwwroot\js\store\modules\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Controllers\TestController.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Controllers\HomeController.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>

@@ -18,7 +18,7 @@
     import Vue from "vue";
     import Vuex from "vuex";
 
-    import { SET_LANG } from "./../store/mutation-types";
+    import { SET_LANG } from "./../store/const-types";
 
     Vue.use(Vuex);
 
@@ -39,7 +39,7 @@
         },
         watch: {
             pickedLang: function (val) {
-                this.$store.commit(SET_LANG, val);
+                this.$store.dispatch(SET_LANG, val);
             }
         }
     };

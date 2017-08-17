@@ -35,7 +35,7 @@
 <script>
     import { Counter } from './../../components/counter';
     import Langchooser from "./../../components/langchooser.vue";
-    import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED } from "./../../store/mutation-types";
+    import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED } from "./../../store/const-types";
     import axios from 'axios';
     //import { mapState } from 'vuex'
 
