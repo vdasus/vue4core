@@ -4,12 +4,12 @@
             <h1>{{ currentMsg }}</h1>
         </div>
         <div class="row">
-            <h1>{{ $t("hello",lang) }}</h1>
+            <h1>{{ $t("hello") }}</h1>
         </div>
         <div class="row">
             <span>{{ testmessage }}</span>
         </div>
-        <input v-model="msg" type="search" v-bind:placeholder="$t('search',lang)">
+        <input v-model="msg" type="search" v-bind:placeholder="$t('search')">
         <label v:show="errors">{{ errors }}</label>
         <br />
         <Langchooser></Langchooser>
@@ -17,17 +17,17 @@
             <counter></counter>
         </div>
         <div class="row">
-            <button type="button" v-on:click="incStore"> {{ $t("inc",lang) }} </button>
-            <button type="button" v-on:click="decStore"> {{ $t("dec",lang) }} </button>
+            <button type="button" v-on:click="incStore"> {{ $t("inc") }} </button>
+            <button type="button" v-on:click="decStore"> {{ $t("dec") }} </button>
         </div>
         <div class="row">
             <input type="checkbox" id="checkbox" v-model="isDelayed">
-            <label for="checkbox">{{ $t("isdelay",lang) }}</label>
+            <label for="checkbox">{{ $t("isdelay") }}</label>
             <input type="checkbox" id="checkbox" v-model="isCached">
-            <label for="checkbox">{{ $t("iscache",lang) }}</label>
+            <label for="checkbox">{{ $t("iscache") }}</label>
         </div>
         <div class="row">
-            <button type="button" v-on:click="getapidata"> {{ $t("reload",lang) }} </button>
+            <button type="button" v-on:click="getapidata"> {{ $t("reload") }} </button>
         </div>
     </div>
 </template>
@@ -49,6 +49,7 @@
             }
         },
         created: function () {
+            this.$i18n.locale = this.lang;
             this.getapidata();
         },
         methods: {
@@ -92,6 +93,11 @@
             },
             lang: function () {
                 return this.$store.state.lang;
+            }
+        },
+        watch: {
+            lang: function () {
+                this.$i18n.locale = this.lang;
             }
         },
         components: {

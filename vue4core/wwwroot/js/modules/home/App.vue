@@ -1,7 +1,7 @@
 ﻿<template>
     <div id="app">
         <div class="row">
-            <h1>{{ $t("htitle", lang) }}</h1>
+            <h1>{{ $t("htitle") }}</h1>
             <Langchooser></Langchooser>
             <div>
                 <a href="http://localhost:63686/Test">Main playground here</a>
@@ -22,9 +22,17 @@
                 msg: "Hello from App.vue",
             }
         },
+        created: function () {
+            this.$i18n.locale = this.lang;
+        },        
         computed: {
             lang: function () {
                 return this.$store.state.lang;
+            }
+        },
+        watch: {
+            lang: function (){
+                this.$i18n.locale = this.lang;
             }
         },
         components: {
