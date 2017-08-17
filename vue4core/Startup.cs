@@ -58,12 +58,11 @@ namespace vue4core
             services.AddResponseCompression();
             services.AddResponseCaching();
 
-            services.AddMvcCore()
+            services.AddMvc()
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = "Resources"; })
-                .AddDataAnnotationsLocalization()
-                .AddAuthorization();
+                .AddDataAnnotationsLocalization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

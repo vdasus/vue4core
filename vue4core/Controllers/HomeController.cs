@@ -46,13 +46,20 @@ namespace vue4core.Controllers
         [HttpPost, HttpGet]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
+            JustSetLanguage(culture);
+            return LocalRedirect(returnUrl);
+        }
+
+        [HttpPost, HttpGet]
+        public IActionResult JustSetLanguage(string culture)
+        {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
 
-            return LocalRedirect(returnUrl);
+            return Ok();
         }
     }
 }

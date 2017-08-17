@@ -1,5 +1,5 @@
 ﻿{
-  "en-US": {
+  "en": {
     "htitle": "Home page title",
     "hello": "hello world!",
     "iscache": "Cached",
@@ -10,7 +10,7 @@
     "picked": "picked ",
     "search": "search ..."
   },
-  "ru-RU": {
+  "ru": {
     "htitle": "Привет с домашней страницы",
     "hello": "привет мир！",
     "iscache": "Кешировать",

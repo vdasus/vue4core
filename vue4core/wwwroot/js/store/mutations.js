@@ -1,4 +1,4 @@
-﻿import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED } from "./mutation-types";
+﻿import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED, SET_LANG } from "./mutation-types";
 
 export default {
     [CNT_INCREMENT]: state => state.count++,
@@ -8,5 +8,8 @@ export default {
     },
     [CNT_SET_CACHED](state, isCached) {
         state.isCached = isCached;
+    },
+    [SET_LANG](state, lang) {
+        state.lang = lang;
     }
 };

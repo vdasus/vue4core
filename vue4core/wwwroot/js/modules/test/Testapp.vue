@@ -2,40 +2,40 @@
     <div id="testapp">
         <div class="row">
             <h1>{{ currentMsg }}</h1>
-            <h1>{{ msg }}</h1>
         </div>
         <div class="row">
-            <h1>{{ $t("hello") }}</h1>
+            <h1>{{ $t("hello",lang) }}</h1>
         </div>
         <div class="row">
             <span>{{ testmessage }}</span>
         </div>
-        <input v-model="msg" type="search" v-bind:placeholder="$t('search')">
+        <input v-model="msg" type="search" v-bind:placeholder="$t('search',lang)">
+        <label v:show="errors">{{ errors }}</label>
         <br />
         <Langchooser></Langchooser>
         <div class="row">
             <counter></counter>
         </div>
         <div class="row">
-            <button type="button" v-on:click="incStore"> {{ $t("inc") }} </button>
-            <button type="button" v-on:click="decStore"> {{ $t("dec") }} </button>
+            <button type="button" v-on:click="incStore"> {{ $t("inc",lang) }} </button>
+            <button type="button" v-on:click="decStore"> {{ $t("dec",lang) }} </button>
         </div>
         <div class="row">
             <input type="checkbox" id="checkbox" v-model="isDelayed">
-            <label for="checkbox">{{ $t("isdelay") }}</label>
+            <label for="checkbox">{{ $t("isdelay",lang) }}</label>
             <input type="checkbox" id="checkbox" v-model="isCached">
-            <label for="checkbox">{{ $t("iscache") }}</label>
-            <br /><label>Locale: {{ this.$i18n.locale }}</label>
+            <label for="checkbox">{{ $t("iscache",lang) }}</label>
         </div>
         <div class="row">
-            <button type="button" v-on:click="getapidata"> {{ $t("reload") }} </button>
+            <button type="button" v-on:click="getapidata"> {{ $t("reload",lang) }} </button>
         </div>
     </div>
 </template>
-<i18n src="./testapp.lang.json" />
+<i18n src="./Testapp.lang.json" />
 <script>
     import { Counter } from './../../components/counter';
     import Langchooser from "./../../components/langchooser.vue";
+    import { CNT_INCREMENT, CNT_DECREMENT, CNT_SET_DELAY, CNT_SET_CACHED } from "./../../store/mutation-types";
     import axios from 'axios';
     //import { mapState } from 'vuex'
 
@@ -44,19 +44,19 @@
         data() {
             return {
                 msg: "",
-                testmessage: ""
+                testmessage: "",
+                errors: []
             }
         },
         created: function () {
-            this.$i18n.locale = "en-US";
             this.getapidata();
         },
         methods: {
             incStore: function () {
-                this.$store.commit('increment');
+                this.$store.commit(CNT_INCREMENT);
             },
             decStore: function () {
-                this.$store.commit('decrement');
+                this.$store.commit(CNT_DECREMENT);
             },
             getapidata: function () {
                 axios.get("/Test/GetTestResponse" + this.cachePostfix + this.delaySec)
@@ -70,7 +70,7 @@
                     return this.$store.state.isDelayed
                 },
                 set(value) {
-                    this.$store.commit('setDelay', value)
+                    this.$store.commit(CNT_SET_DELAY, value)
                 }
             },
             isCached: {
@@ -78,17 +78,20 @@
                     return this.$store.state.isCached
                 },
                 set(value) {
-                    this.$store.commit('setCached', value)
+                    this.$store.commit(CNT_SET_CACHED, value)
                 }
             },
             currentMsg: function () {
-                return this.$t('htitle', this.$i18n.locale);
+                return this.$t('htitle', this.lang);
             },
             delaySec: function () {
                 return this.isDelayed ? 2 : 0;
             },
             cachePostfix: function () {
                 return this.isCached ? "Cached/" : "/";
+            },
+            lang: function () {
+                return this.$store.state.lang;
             }
         },
         components: {
