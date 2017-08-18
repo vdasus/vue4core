@@ -1,0 +1,24 @@
+﻿{
+  "en": {
+    "htitle": "Home page title",
+    "hello": "hello world!",
+    "iscache": "Cached",
+    "isdelay": "Delayed",
+    "inc": "Inc",
+    "dec": "Dec",
+    "reload": "Reload",
+    "picked": "picked ",
+    "search": "search ..."
+  },
+  "ru": {
+    "htitle": "Привет с домашней страницы",
+    "hello": "привет мир！",
+    "iscache": "Кешировать",
+    "isdelay": "Задержка",
+    "inc": "Плюс",
+    "dec": "Минус",
+    "reload": "Обновить",
+    "picked": "выбрано ",
+    "search": "искать ..."
+  }
+}

@@ -1,17 +1,27 @@
-/// <binding BeforeBuild='Run - Development' />
+/// <binding ProjectOpened='Watch - Development' />
 var path = require("path");
 var webpack = require("webpack");
 var WebpackNotifierPlugin = require("webpack-notifier");
 var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const extractLess = new ExtractTextPlugin({
+    filename: "[name].css",
+    allChunks: true
+});
+
 module.exports = {
     entry: {
+        wphr: "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
         main: "./wwwroot/js/main.js",
-        test: "./wwwroot/js/test.js"
+        site: "./wwwroot/js/site.js",
+        test: "./wwwroot/js/test.js",
+        sitecss: "./wwwroot/css/site.less"
     },
     output: {
-        path: path.resolve(__dirname, "./wwwroot/js/dist"),
-        publicPath: "/wwwroot/js/dist/",
+        path: path.resolve(__dirname, "./wwwroot/_dist"),
+        publicPath: "/wwwroot/_dist/",
         filename: "[name].js"
     },
     module: {
@@ -23,7 +33,6 @@ module.exports = {
                     loaders: {
                         i18n: "@kazupon/vue-i18n-loader"
                     }
-                    // other vue-loader options go here
                 }
             },
             {
@@ -43,12 +52,31 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "jshint-loader",
                 enforce: "pre"
-            }
+            },
+            {
+                test: /\.less$/,
+                use: extractLess.extract({
+                    fallback: "style-loader",
+                    use: [
+                        {
+                            loader: "css-loader"
+                        }, {
+                            loader: "less-loader"
+                        }
+                    ]
+                })
+            },
+            { test: /\.(woff|woff2)$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=application/octet-stream" },
+            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" }
         ]
     },
     resolve: {
         alias: {
-            'vue$': "vue/dist/vue.esm.js"
+            'vue$': "vue/dist/vue.esm.js",
+            jQuery: "jquery",
+            $: "jquery",
+            jquery: "jquery"
         }
     },
     devServer: {
@@ -60,17 +88,29 @@ module.exports = {
     },
     devtool: "#eval-source-map",
     plugins: [
-        new WebpackNotifierPlugin()
+        new WebpackNotifierPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        extractLess,
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            'window.jQuery': "jquery",
+            Popper: ["popper.js", "default"],
+// In case you imported plugins individually, you must also require them here:
+            Util: "exports-loader?Util!bootstrap/js/dist/util",
+            Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
+        })
     ]
 };
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "Production") {
     module.exports.devtool = "#source-map";
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: '"production"'
+                NODE_ENV: '"Production"'
             }
         }),
         new UglifyJSPlugin({
@@ -90,4 +130,20 @@ if (process.env.NODE_ENV === "production") {
 output: { http://www.sochix.ru/how-to-integrate-webpack-into-visual-studio-2015/  
         path: path.join(__dirname, "./dist"),
         filename: "[name].js"
- }*/
+
+,
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            'window.jQuery': "jquery",
+            Popper: ["popper.js", "default"],
+            // In case you imported plugins individually, you must also require them here:
+            Util: "exports-loader?Util!bootstrap/js/dist/util",
+            Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+        })
+ }
+
+filename: "[name].[contenthash].css",
+disable: process.env.NODE_ENV === "development",
+
+*/

@@ -1,13 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="row">
+﻿<div class="row">
+    <h2>@ViewBag.Title</h2>
     <div class="col-md-6">
         <div id="app" v-cloak></div>
     </div>
 </div>
 
 @section prescripts {
-    <script src="~/js/dist/main.js"></script>
+    <script src="~/_dist/main.js"></script>
 }
