@@ -6,6 +6,7 @@ var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
     entry: {
+        wphr: "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
         main: "./wwwroot/js/main.js",
         test: "./wwwroot/js/test.js"
     },
@@ -23,7 +24,6 @@ module.exports = {
                     loaders: {
                         i18n: "@kazupon/vue-i18n-loader"
                     }
-                    // other vue-loader options go here
                 }
             },
             {
@@ -48,7 +48,10 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': "vue/dist/vue.esm.js"
+            'vue$': "vue/dist/vue.esm.js",
+            jQuery: "jquery",
+            $: "jquery",
+            jquery: "jquery"
         }
     },
     devServer: {
@@ -60,7 +63,9 @@ module.exports = {
     },
     devtool: "#eval-source-map",
     plugins: [
-        new WebpackNotifierPlugin()
+        new WebpackNotifierPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ]
 };
 
