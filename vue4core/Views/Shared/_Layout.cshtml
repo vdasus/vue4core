@@ -7,8 +7,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - vue4core</title>
-
-    <environment names="Development">
+    
+    <link rel="stylesheet" href="~/wwwroot/_dist/sitecss.css" />
+    @*<environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -17,7 +18,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    </environment>*@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -55,9 +56,11 @@
 
     @RenderSection("prescripts", required: false)
 
-    <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+@*import $ from "jquery";*@
+    
+<script src="~/wwwroot/_dist/site.js" asp-append-version="true"></script>
+
+@*<environment names="Development">
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -73,8 +76,8 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>*@
 
     @RenderSection("Scripts", required: false)
 </body>
