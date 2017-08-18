@@ -8,6 +8,7 @@ module.exports = {
     entry: {
         wphr: "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
         main: "./wwwroot/js/main.js",
+        site: "./wwwroot/js/site.js",
         test: "./wwwroot/js/test.js"
     },
     output: {
